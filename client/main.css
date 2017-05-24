@@ -18,7 +18,6 @@ body {
 }
  
 .container {
-  max-width: 600px;
   margin: 0 auto;
   min-height: 100%;
   background: white;
@@ -64,8 +63,6 @@ form {
 }
  
 ul {
-  margin: 0;
-  padding: 0;
   background: white;
 }
  
@@ -108,6 +105,18 @@ header .hide-completed {
  
 .toggle-private {
   margin-left: 5px;
+}
+
+.submit {
+  display: none;
+}
+
+.submit:hover {
+  display: block;
+}
+
+.searchResult:hover .submit{
+  display: block;
 }
  
 @media (max-width: 600px) {

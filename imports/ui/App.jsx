@@ -26,7 +26,7 @@ export class App extends Component {
   handleSearchSubmit(event) {
     event.preventDefault();
     HTTP.get('https://api.spotify.com/v1/search', {
-      params: {"query": this.state.query, "type": 'track'}
+      params: {query: this.state.query, type: 'track', limit: '15'}
     }, (error, result) => {
       if (!error) {
         console.log(result);
@@ -39,15 +39,11 @@ export class App extends Component {
     this.setState({desc: event.target.value});
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    Meteor.call('songInsert', event.target.value);
-  }
   renderSongs() {
     //let filteredSongs = this.props.songs.filter(song => song.creator !== this.props.currentUser);
     return this.props.songs.map( (song) => {
       const currentUserId = this.props.currentUser && this.props.currentUser._id;
-      const sameUser = song.creator === currentUserId;
+      const sameUser = song.submittedBy === currentUserId;
       return (
         <Song 
           key= {song._id}
@@ -76,22 +72,10 @@ export class App extends Component {
         <h1>Music from the World</h1>
         <AccountsUIWrapper />
         { this.props.currentUser ?
-          <form className="new-task" onSubmit={this.handleSubmit.bind(this)} >
-            <input
-              type="text"
-              ref="textInput"
-              value = {this.props.desc}
-              placeholder="Type to search for new songs"
-              onChange={this.handleChange.bind(this)}
-            />
-          </form> : ''
-        }
-
-        { this.props.currentUser ?
           <form className="new-task" onSubmit={(event) => this.handleSearchSubmit(event)} >
             <input
               type="text"
-              value = {this.props.desc}
+              value = {this.state.query}
               placeholder="Type to search for new songs"
               onChange={(event) => this.handleSearchChange(event)}
             />

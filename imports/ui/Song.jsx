@@ -25,7 +25,7 @@ export default class Song extends Component {
         <span className="text">
           <strong>{this.props.song.username}</strong>: {this.props.song.name}; rating: {(this.props.song.ratingSum/this.props.song.ratingCount) || 0.0}
         </span>
-        { this.props.currentUser ?
+        { this.props.currentUser && !this.props.sameUser ?
           <form className="new-task" onSubmit={this.handleSubmit.bind(this)} >
             <input
               type="number"
