@@ -16,7 +16,7 @@ export default class Song extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    Meteor.call('songs.rate', this.props.song._id, Number(this.state.userRating));
+    Meteor.call('songsRate', this.props.song._id, Number(this.state.userRating));
   }
 
   render() { 

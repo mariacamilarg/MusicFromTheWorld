@@ -1,16 +1,17 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
- 
+import SpotifyWebApi from "spotify-web-api-node";
+
 export const Songs = new Mongo.Collection('songs');
 
 if (Meteor.isServer) {
   // This code only runs on the server
   Meteor.publish('songs', () => Songs.find({}));
 }
- 
+
 Meteor.methods({
-  'songs.rate'(songId, rating){
+  songRate(songId, rating) {
     check(songId, String);
     check(rating, Number);
     const song = Songs.findOne(songId);
@@ -19,15 +20,15 @@ Meteor.methods({
     }
     Songs.update(songId, { $inc: { ratingSum: rating, ratingCount: 1 }, $push: { ratedBy: this.userId} });
   },
-  'songs.insert'(name, country) {
+  songInsert(name, country) {
     check(name, String);
-    check(country, String);
- 
+    //check(country, String);
+
     // Make sure the user is logged in before inserting a song
     if (! this.userId) {
       throw new Meteor.Error('not-authorized');
     }
- 
+
     Songs.insert({
       name,
       country,
@@ -38,40 +39,29 @@ Meteor.methods({
       ratedBy: []
     });
   },
-  // 'tasks.remove'(taskId) {
-  //   check(taskId, String);
+  songSearch(query) {
+    let spotifyApi = new SpotifyWebApi({
+      clientId : process.env.SPOTIFY_CLIENTID,
+      clientSecret : process.env.SPOTIFY_CLIENTSECRET,
+      redirectUri : 'http://www.uniandes.edu.co'
+    });
+    console.log("Created connection");
+    spotifyApi.searchTracks(query, function(err, data) {
+      if (err) {
+        console.error('Something went wrong', err.message);
+        return;
+      }
 
-  //   const task = Tasks.findOne(taskId);
-  //   if (task.private && task.owner !== this.userId) {
-  //     // If the task is private, make sure only the owner can delete it
-  //     throw new Meteor.Error('not-authorized');
-  //   }
+      // Print some information about the results
+      console.log('I got ' + data.body.tracks.total + ' results!');
 
-  //   Tasks.remove(taskId);
-  // },
-  // 'tasks.setChecked'(taskId, setChecked) {
-  //   check(taskId, String);
-  //   check(setChecked, Boolean);
-  
-  //   const task = Tasks.findOne(taskId);
-  //   if (task.private && task.owner !== this.userId) {
-  //     // If the task is private, make sure only the owner can check it off
-  //     throw new Meteor.Error('not-authorized');
-  //   }
-    
-  //   Tasks.update(taskId, { $set: { checked: setChecked } });
-  // },
-  // 'tasks.setPrivate'(taskId, setToPrivate) {
-  //   check(taskId, String);
-  //   check(setToPrivate, Boolean);
- 
-  //   const task = Tasks.findOne(taskId);
- 
-  //   // Make sure only the task owner can make a task private
-  //   if (task.owner !== this.userId) {
-  //     throw new Meteor.Error('not-authorized');
-  //   }
- 
-  //   Tasks.update(taskId, { $set: { private: setToPrivate } });
-  // },
+      // Go through the first page of results
+      let firstPage = data.body.tracks.items;
+      console.log('The tracks in the first page are.. (popularity in parentheses)');
+
+      firstPage.forEach(function(track, index)  {
+        console.log(index + ': ' + track.name + ' (' + track.popularity + ')');
+      });
+    });
+  },
 });
