@@ -12,6 +12,7 @@ export default class Song extends Component {
     return (
       <li> 
       <img src={this.props.song.album.images[1].url} alt={this.props.song.album.name} />
+      <audio src={this.props.song.preview_url} controls autoplay="true"/>
         <span className="text">
         </span>
       </li>

@@ -73,7 +73,7 @@ export class App extends Component {
   render() {
     return(
       <div className ="container">
-        <h1>PeerGrader</h1>
+        <h1>Music from the World</h1>
         <AccountsUIWrapper />
         { this.props.currentUser ?
           <form className="new-task" onSubmit={this.handleSubmit.bind(this)} >
