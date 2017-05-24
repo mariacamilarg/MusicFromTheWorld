@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
-import SpotifyWebApi from "spotify-web-api-node";
+import { HTTP } from 'meteor/http'
 
 export const Songs = new Mongo.Collection('songs');
 
@@ -20,7 +20,7 @@ Meteor.methods({
     }
     Songs.update(songId, { $inc: { ratingSum: rating, ratingCount: 1 }, $push: { ratedBy: this.userId} });
   },
-  songInsert(name, country) {
+  songInsert(name, artist, country, spotifyID) {
     check(name, String);
     //check(country, String);
 
@@ -31,7 +31,9 @@ Meteor.methods({
 
     Songs.insert({
       name,
+      artist,
       country,
+      spotifyID,
       submittedOn: new Date(),
       submittedBy: this.userId,
       username: Meteor.users.findOne(this.userId).username,
@@ -40,28 +42,35 @@ Meteor.methods({
     });
   },
   songSearch(query) {
-    let spotifyApi = new SpotifyWebApi({
-      clientId : process.env.SPOTIFY_CLIENTID,
-      clientSecret : process.env.SPOTIFY_CLIENTSECRET,
-      redirectUri : 'http://www.uniandes.edu.co'
-    });
-    console.log("Created connection");
-    spotifyApi.searchTracks(query, function(err, data) {
-      if (err) {
-        console.error('Something went wrong', err.message);
-        return;
-      }
-
-      // Print some information about the results
-      console.log('I got ' + data.body.tracks.total + ' results!');
-
-      // Go through the first page of results
-      let firstPage = data.body.tracks.items;
-      console.log('The tracks in the first page are.. (popularity in parentheses)');
-
-      firstPage.forEach(function(track, index)  {
-        console.log(index + ': ' + track.name + ' (' + track.popularity + ')');
+    HTTP.get('https://api.spotify.com/v1/search', {
+      params: {"query": query, "type": 'track'}
+    }, (error, result) => {
+        if (!error) {
+          console.log(result);
+        }
       });
-    });
+    // let spotifyApi = new SpotifyWebApi({
+    //   clientId : process.env.SPOTIFY_CLIENTID,
+    //   clientSecret : process.env.SPOTIFY_CLIENTSECRET,
+    //   redirectUri : 'http://www.uniandes.edu.co'
+    // });
+    // console.log("Created connection");
+    // spotifyApi.searchTracks(query, function(err, data) {
+    //   if (err) {
+    //     console.error('Something went wrong', err.message);
+    //     return;
+    //   }
+
+    //   // Print some information about the results
+    //   console.log('I got ' + data.body.tracks.total + ' results!');
+
+    //   // Go through the first page of results
+    //   let firstPage = data.body.tracks.items;
+    //   console.log('The tracks in the first page are.. (popularity in parentheses)');
+
+    //   firstPage.forEach(function(track, index)  {
+    //     console.log(index + ': ' + track.name + ' (' + track.popularity + ')');
+    //   });
+    // });
   },
 });

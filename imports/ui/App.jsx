@@ -1,28 +1,39 @@
 import React, {Component, PropTypes} from "react";
 import ReactDOM from 'react-dom';
 import {Meteor} from "meteor/meteor";
-import {createContainer} from "meteor/react-meteor-data"
+import {createContainer} from "meteor/react-meteor-data";
+import { HTTP } from 'meteor/http';
 import { Songs } from '../api/songs.js';
 
+
 import Song from "./Song.jsx";
+import SearchResult from "./SearchResult.jsx";
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      desc: '',
-      search: ''
+      query: '',
+      search: []
     };
   }
 
   handleSearchChange(event) {
-    this.setState({search: event.target.value});
+    this.setState({query: event.target.value});
   }
 
   handleSearchSubmit(event) {
     event.preventDefault();
-    Meteor.call('songSearch', event.target.value);
+    console.log("Query is: " + event.target.value);
+    HTTP.get('https://api.spotify.com/v1/search', {
+      params: {"query": event.target.value, "type": 'track'}
+    }, (error, result) => {
+      if (!error) {
+        console.log(result);
+        this.setState({search: result.data.tracks.items});
+      }
+    });
   }
 
   handleChange(event) {
@@ -44,6 +55,17 @@ export class App extends Component {
           song={song}
           sameUser={sameUser}
           currentUser={this.props.currentUser}
+        />
+      );
+    });
+  }
+
+  renderResults() {
+    return this.state.search.map( (song) => {
+      return (
+        <SearchResult 
+          key= {song.id}
+          song={song}
         />
       );
     });
@@ -76,6 +98,10 @@ export class App extends Component {
             />
           </form> : ''
         }
+        <h2>Results:</h2>
+        <ul>
+        {this.renderResults()}
+        </ul>
         <h2>Songs:</h2>
         <ul>
         {this.renderSongs()}

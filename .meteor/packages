@@ -21,5 +21,5 @@ shell-server@0.2.2            # Server-side component of the `meteor shell` comm
 react-meteor-data
 accounts-ui
 accounts-password
-alanning:roles
-xinranxiao:spotify-web-api
+http
+twbs:bootstrap
