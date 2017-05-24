@@ -40,6 +40,7 @@ export class App extends Component {
   }
 
   renderSongs() {
+    //TODO Organizarlos por país. Cambiar a thumbs up/down?
     //let filteredSongs = this.props.songs.filter(song => song.creator !== this.props.currentUser);
     return this.props.songs.map( (song) => {
       const currentUserId = this.props.currentUser && this.props.currentUser._id;

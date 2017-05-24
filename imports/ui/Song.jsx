@@ -16,7 +16,7 @@ export default class Song extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    Meteor.call('songsRate', this.props.song._id, Number(this.state.userRating));
+    Meteor.call('songRate', this.props.song._id, Number(this.state.userRating));
   }
 
   playAudio() {
@@ -37,10 +37,10 @@ export default class Song extends Component {
 
   render() { 
     return (
-      <li> 
+      <li className="col-lg-4 col-md-6 col-sm-12"> 
         <div>
           <img className={this.isPlaying()} src={this.props.song.data.album.images[1].url} alt={this.props.song.data.album.name} onClick={() => this.playAudio()} />
-          <audio src={this.props.song.data.preview_url} controls controlsList="nodownload" hidden onEnded={() => this.playAudio()} ref={(audio) => { this.audio = audio; }}/>
+          <audio src={this.props.song.data.preview_url} controls hidden onEnded={() => this.playAudio()} ref={(audio) => { this.audio = audio; }}/>
           <div className="songInfo">
             <h3>{this.props.song.data.name + " by " +  this.props.song.data.artists[0].name} </h3>
           </div>
