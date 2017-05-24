@@ -25,9 +25,8 @@ export class App extends Component {
 
   handleSearchSubmit(event) {
     event.preventDefault();
-    console.log("Query is: " + event.target.value);
     HTTP.get('https://api.spotify.com/v1/search', {
-      params: {"query": event.target.value, "type": 'track'}
+      params: {"query": this.state.query, "type": 'track'}
     }, (error, result) => {
       if (!error) {
         console.log(result);
