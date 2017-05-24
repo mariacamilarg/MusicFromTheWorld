@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { Meteor } from 'meteor/meteor';
-import classnames from 'classnames';
 
 export default class Song extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userRating: 0
+      userRating: 0,
+      playing: false
     };
   }
 
@@ -19,11 +19,34 @@ export default class Song extends Component {
     Meteor.call('songsRate', this.props.song._id, Number(this.state.userRating));
   }
 
+  playAudio() {
+    if(this.state.playing) {
+      this.setState({playing: false});
+      this.audio.pause(); 
+    } else {
+      this.setState({playing: true});
+      this.audio.play();
+    }
+  }
+
+  isPlaying() {
+    if(this.state.playing)
+      return "playing";
+    return ""; 
+  }
+
   render() { 
     return (
       <li> 
+        <div>
+          <img className={this.isPlaying()} src={this.props.song.data.album.images[1].url} alt={this.props.song.data.album.name} onClick={() => this.playAudio()} />
+          <audio src={this.props.song.data.preview_url} controls controlsList="nodownload" hidden onEnded={() => this.playAudio()} ref={(audio) => { this.audio = audio; }}/>
+          <div className="songInfo">
+            <h3>{this.props.song.data.name + " by " +  this.props.song.data.artists[0].name} </h3>
+          </div>
+        </div>
         <span className="text">
-          <strong>{this.props.song.username}</strong>: {this.props.song.name}; rating: {(this.props.song.ratingSum/this.props.song.ratingCount) || 0.0}
+          <strong>Submited by: {this.props.song.username}</strong>; rating: {(this.props.song.ratingSum/this.props.song.ratingCount) || 0.0}
         </span>
         { this.props.currentUser && !this.props.sameUser ?
           <form className="new-task" onSubmit={this.handleSubmit.bind(this)} >

@@ -20,8 +20,7 @@ Meteor.methods({
     }
     Songs.update(songId, { $inc: { ratingSum: rating, ratingCount: 1 }, $push: { ratedBy: this.userId} });
   },
-  songInsert(name, artist, country, spotifyID) {
-    check(name, String);
+  songInsert(country, data) {
     //check(country, String);
 
     // Make sure the user is logged in before inserting a song
@@ -30,10 +29,8 @@ Meteor.methods({
     }
 
     Songs.insert({
-      name,
-      artist,
       country,
-      spotifyID,
+      data,
       submittedOn: new Date(),
       submittedBy: this.userId,
       username: Meteor.users.findOne(this.userId).username,
