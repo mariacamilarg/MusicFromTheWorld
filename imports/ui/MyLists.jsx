@@ -59,7 +59,7 @@ export class MyLists extends Component {
                   <div className="col-md-1">
     							</div>
     						  <div className="col-md-9">
-                    <h2>music from the world</h2>
+                    <h2><b>music from the world</b></h2>
     							</div>
 									<div className="col-md-2">
                     <AccountsUIWrapper />
