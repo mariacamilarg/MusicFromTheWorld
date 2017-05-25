@@ -17,6 +17,7 @@ import '../public/css/style.css';
 import '../public/css/font-awesome.css';
 import '../public/css/icon-font.css';
 import '../public/css/audio.css';
+import '../public/css/main.css';
 
 //JS
 import './js/jquery-2.1.4.js';
@@ -38,11 +39,10 @@ Meteor.startup(() => {
   $('html').attr('lang', 'en');
   render(
     <Router history={ browserHistory } >
-      <Route path='/' component={ App }>
-        <Route path="browse" component={ Browse }/>
-        <Route path="mylists" component={ MyLists }/>
-        <Route path="contact" component={ Contact }/>
-      </Route>
+      <Route path='/' component={ App }/>
+      <Route path="/browse" component={ Browse }/>
+      <Route path="/mylists" component={ MyLists }/>
+      <Route path="/contact" component={ Contact }/>
     </Router>,
     document.getElementById('render-target')
   );

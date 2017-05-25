@@ -1,72 +1,112 @@
-import React, { Component, PropTypes } from 'react';
-import { Meteor } from 'meteor/meteor';
+import React, {Component, PropTypes} from "react";
+import ReactDOM from 'react-dom';
+import { browserHistory } from 'react-router';
+import { Link } from 'react-router';
+import { Meteor } from "meteor/meteor";
+import {createContainer} from "meteor/react-meteor-data";
+import { HTTP } from 'meteor/http';
 
-export default class Song extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userRating: 0,
-      playing: false
-    };
-  }
+import { Songs } from '../api/songs.js';
 
-  handleChange(event) {
-    this.setState({userRating: event.target.value});
-  }
+import AccountsUIWrapper from './AccountsUIWrapper.jsx';
+import Song from "./Song.jsx";
 
-  handleSubmit(event) {
-    event.preventDefault();
-    Meteor.call('songRate', this.props.song._id, Number(this.state.userRating));
-  }
+export class MyLists extends Component {
 
-  playAudio() {
-    if(this.state.playing) {
-      this.setState({playing: false});
-      this.audio.pause();
-    } else {
-      this.setState({playing: true});
-      this.audio.play();
-    }
-  }
-
-  isPlaying() {
-    if(this.state.playing)
-      return "playing";
-    return "";
+  renderSongs() {
+    //TODO Organizarlos por país. Cambiar a thumbs up/down?
+    //let filteredSongs = this.props.songs.filter(song => song.creator !== this.props.currentUser);
+    return this.props.songs.map( (song) => {
+      const currentUserId = this.props.currentUser && this.props.currentUser._id;
+      const sameUser = song.submittedBy === currentUserId;
+      return (
+        <Song
+          key= {song._id}
+          song={song}
+          sameUser={sameUser}
+          currentUser={this.props.currentUser}
+        />
+      );
+    });
   }
 
   render() {
-    return (
-      <li className="col-lg-4 col-md-6 col-sm-12">
-        <div>
-          <img className={this.isPlaying()} src={this.props.song.data.album.images[1].url} alt={this.props.song.data.album.name} onClick={() => this.playAudio()} />
-          <audio src={this.props.song.data.preview_url} controls hidden onEnded={() => this.playAudio()} ref={(audio) => { this.audio = audio; }}/>
-          <div className="songInfo">
-            <h3>{this.props.song.data.name + " by " +  this.props.song.data.artists[0].name} </h3>
+    return(
+      <div className="sticky-header left-side-collapsed">
+        <section>
+          <div className="left-side sticky-left-side" id="navbar">
+            <div className="logo">
+              <h1>MFTW</h1>
+      			</div>
+      			<div className="logo-icon text-center">
+              <Link to={'/'}><span>M</span></Link>
+      			</div>
+
+      			<div className="left-side-inner">
+              <ul className="nav nav-pills nav-stacked custom-nav">
+                <li><Link to={'/'}><i className="lnr lnr-home"></i><span>Home</span></Link></li>
+                <li><Link to={'/browse'}><i className="lnr lnr-indent-increase"></i><span>Browse</span></Link></li>
+                <li><Link to={'/mylists'}><i className="lnr lnr-music-note"></i><span>My Lists</span></Link></li>
+                <li><Link to={'/contact'}><i className="lnr lnr-pencil"></i><span>Contact</span></Link></li>
+      				</ul>
+      			</div>
           </div>
-        </div>
-        <span className="text">
-          <strong>Submited by: {this.props.song.username}</strong>; rating: {(this.props.song.ratingSum/this.props.song.ratingCount) || 0.0}
-        </span>
-        { this.props.currentUser && !this.props.sameUser ?
-          <form className="new-task" onSubmit={this.handleSubmit.bind(this)} >
-            <input
-              type="number"
-              min="1"
-              max="5"
-              placeholder="Select your rating for this song"
-              onChange={this.handleChange.bind(this)}
-              disabled={this.props.sameUser || this.props.song.ratedBy.indexOf(this.props.currentUser._id) !== -1 }
-            />
-          </form> : ''
-        }
-      </li>
+
+    		  <div className="main-content">
+            <div className="header-section">
+    				  <div className="menu-right">
+                <div className="profile_details">
+                  <div className="col-md-1">
+    							</div>
+    						  <div className="col-md-9">
+                    <h2>music from the world</h2>
+    							</div>
+									<div className="col-md-2">
+                    <AccountsUIWrapper />
+                  </div>
+    							<div className="clearfix"> </div>
+    						</div>
+    					</div>
+    					<div className="clearfix"></div>
+    				</div>
+
+            <div className ="app-container">
+              <div className="row">
+                <div className="col-md-1"></div>
+                <div className="col-md-10">
+                  <br />
+                  <div className="row">
+                    <div className="col-md-4">
+                      <h2>Top Charts Per Country:</h2>
+                    </div>
+                    <div className="col-md-8">
+                      dropdown of countries
+                    </div>
+                  </div>
+                  <br />
+                  <ul>
+                    {this.renderSongs()}
+                  </ul>
+                </div>
+                <div className="col-md-1"></div>
+              </div>
+
+            </div>
+
+    			  <footer>
+              <p>Mosaic 2016. All Rights Reserved | Design by <a href="https://w3layouts.com/" target="_blank">w3layouts.</a></p>
+    			  </footer>
+          </div>
+        </section>
+      </div>
     );
   }
 }
 
-Song.propTypes = {
-  song: PropTypes.object.isRequired,
-  sameUser: PropTypes.bool.isRequired,
-  currentUser: PropTypes.object
-};
+export default createContainer(() => {
+  Meteor.subscribe('songs');
+  return {
+    songs: Songs.find({}, { sort: { ratingCount: -1 } }).fetch(),
+    currentUser: Meteor.user()
+  };
+}, MyLists);
