@@ -14,7 +14,6 @@ export default class SearchResult extends Component {
   handleAdd(event) {
     event.preventDefault();
     Meteor.call('songInsert', this.state.country, this.props.song);
-    console.log("add"+ this.props.song);
   }
 
   handleCountryChange(event) {
