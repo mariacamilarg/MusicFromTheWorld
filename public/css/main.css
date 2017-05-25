@@ -108,3 +108,7 @@ header .hide-completed {
   float:left;
   padding: 1%
 }
+
+.map-frame {
+  width: 100%
+}
