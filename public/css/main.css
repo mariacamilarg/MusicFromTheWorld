@@ -86,8 +86,25 @@ header .hide-completed {
 .song-display .song-info {
   text-align: center;
   vertical-align: middle;
+  padding: 1%;
 }
 
 .song-country {
+  vertical-align: bottom;
   width:100%;
+  position: relative; /* Enable absolute positioning for children and pseudo elements */
+  margin: 0 auto;
+  outline: none;
+  cursor: pointer;
+}
+
+.add-country-button {
+  vertical-align: top;
+}
+
+.div-browse-result {
+  width: 18%;
+  display:inline-block;
+  float:left;
+  padding: 1%
 }

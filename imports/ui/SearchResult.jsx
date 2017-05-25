@@ -42,6 +42,7 @@ export default class SearchResult extends Component {
         <div className="row">
           <img className="song-img" src={this.props.song.album.images[1].url} alt={this.props.song.album.name} />
         </div>
+        <br />
         <div className="row">
           <div className="col-md-2 song-play">
             <img className="song-img-mini" src="/img/play.png" alt="Play Song" onClick={() => this.playAudio()} />
@@ -56,6 +57,7 @@ export default class SearchResult extends Component {
             <p>{this.props.song.artists[0].name} </p>
           </div>
         </div>
+        <br/>
         <div className="row">
           <div className="col-md-8">
             <select className="song-country" onChange={(event) => this.handleCountryChange(event)} >
@@ -313,7 +315,7 @@ export default class SearchResult extends Component {
           </div>
           <div className="col-md-4">
             <form onSubmit={(event) => this.handleAdd(event)} >
-              <input type="submit" value="ADD"/>
+              <input className="btn add-country-button" type="submit" value="ADD"/>
             </form>
           </div>
           <br/>

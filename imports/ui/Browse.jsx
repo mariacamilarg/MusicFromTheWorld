@@ -116,9 +116,11 @@ class Browse extends Component {
                     </div>
                   </div>
                   <br />
-                  <ul>
-                    {this.renderResults()}
-                  </ul>
+                  <div className="row">
+                    <div className="col-md-12">
+                      {this.renderResults()}
+                    </div>
+                  </div>
                 </div>
                 <div className="col-md-1"></div>
               </div>
