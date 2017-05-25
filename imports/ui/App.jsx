@@ -95,6 +95,7 @@ export class App extends Component {
                     <div className="col-md-8">
                       <h3>
                         <select className="song-country" onChange={(event) => this.handleCountryChange(event)} >
+                          <option value default>--Select Country--</option>
                           <option value="AFG">Afghanistan</option>
                           <option value="ALA">Åland Islands</option>
                           <option value="ALB">Albania</option>
@@ -143,7 +144,7 @@ export class App extends Component {
                           <option value="CHN">China</option>
                           <option value="CXR">Christmas Island</option>
                           <option value="CCK">Cocos (Keeling) Islands</option>
-                          <option value="COL" default>Colombia</option>
+                          <option value="COL">Colombia</option>
                           <option value="COM">Comoros</option>
                           <option value="COG">Congo</option>
                           <option value="COD">Congo, the Democratic Republic of the</option>
