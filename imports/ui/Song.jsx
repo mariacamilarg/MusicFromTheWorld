@@ -17,6 +17,7 @@ export default class Song extends Component {
   }
 
   playAudio() {
+    event.preventDefault();
     if (this.state.playing) {
       this.setState({ playing: false });
       this.audio.pause();
@@ -45,7 +46,7 @@ export default class Song extends Component {
     return (
       <li className="col-lg-4 col-md-6 col-sm-12">
         <div>
-          <img className={this.isPlaying() + " " + "albumart"} src={this.props.song.data.album.images[1].url} alt={this.props.song.data.album.name} onClick={this.playAudio.bind(this)} />
+          <img className={this.isPlaying() + " " + "albumart"} src={this.props.song.data.album.images[1].url} alt={this.props.song.data.album.name} onClick={this.playAudio} />
           <audio src={this.props.song.data.preview_url} controls hidden onEnded={() => this.playAudio()} ref={(audio) => { this.audio = audio; }} />
           <div className="songInfo center">
             <h3>{this.props.song.data.name + " by " +  this.props.song.data.artists[0].name} </h3>
