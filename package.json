@@ -2,7 +2,9 @@
   "name": "MusicFromTheWorld",
   "private": true,
   "scripts": {
-    "start": "meteor run"
+    "start": "meteor run",
+    "lint": "eslint .",
+    "pretest": "npm run lint --silent"
   },
   "dependencies": {
     "babel-runtime": "^6.20.0",
@@ -15,5 +17,51 @@
     "react-audio-player": "^0.5.0",
     "react-dom": "^15.4.2",
     "react-router": "^2.8.1"
+  },
+  "devDependencies": {
+    "@meteorjs/eslint-config-meteor": "^1.0.5",
+    "babel-eslint": "^7.2.3",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-import-resolver-meteor": "^0.4.0",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-jsx-a11y": "^5.0.3",
+    "eslint-plugin-meteor": "^4.0.1",
+    "eslint-plugin-react": "^7.0.1"
+  },
+  
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "allowImportExportEverywhere": true
+    },
+    "plugins": [
+      "meteor"
+    ],
+    "extends": [
+      "airbnb",
+      "plugin:meteor/recommended"
+    ],
+    "settings": {
+      "import/resolver": "meteor"
+    },
+    "rules": {
+      "import/no-extraneous-dependencies": "off",
+      "import/extensions": [
+        "off",
+        "never"
+      ],
+      "linebreak-style": [
+        "error",
+        "unix"
+      ],
+      "no-underscore-dangle": "off"
+    },
+    "env": {
+      "browser": true,
+      "node": true,
+      "jasmine": true,
+      "meteor": true
+    }
   }
 }

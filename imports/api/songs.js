@@ -1,10 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
-import { HTTP } from 'meteor/http'
+import { HTTP } from 'meteor/http';
 
-const Songs = new Mongo.Collection('songs');
-export { Songs as default };
+export const Songs = new Mongo.Collection('songs');
 
 if (Meteor.isServer) {
   // This code only runs on the server
