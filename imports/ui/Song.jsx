@@ -8,7 +8,6 @@ export default class Song extends Component {
     this.state = {
       userRating: 0,
       playing: false,
-      lastFm: {},
     };
   }
 
@@ -35,13 +34,7 @@ export default class Song extends Component {
   }
 
   componentDidMount() {
-    HTTP.get('https://ws.audioscrobbler.com/2.0/', {
-      params: { method: 'track.search', track: this.props.song.data.name + ' ' + this.props.song.data.artists[0].name, api_key: '6a3cf18c95f7ec66d67daaba31c307f7', format: 'json' } }, (error, result) => {
-        if (!error) {
-          console.log(result);
-          this.setState({ lastFm: result.data.results.trackmatches.track[0] });
-        }
-      });
+    Meteor.call('songLastFM', this.props.song);
   }
 
   handleChange(event) {
@@ -61,8 +54,8 @@ export default class Song extends Component {
         <span className="text">
           <strong>Submited by: {this.props.song.username}</strong>; rating: {(this.props.song.ratingSum/this.props.song.ratingCount) || 0.0}
         </span>
-        { this.state.lastFm ?
-          <a href={this.state.lastFm.url}>
+        { this.props.song.lastFm ?
+          <a href={ this.props.song.lastFm.url}>
             <img src="img/lastfm_red_small.gif" alt="Last.fm logo" />
           </a> : ''
         }

@@ -35,7 +35,17 @@ Meteor.methods({
       submittedBy: this.userId,
       username: Meteor.users.findOne(this.userId).username,
       rating: 0,
-      ratedBy: []
+      ratedBy: [],
     });
+  },
+  songLastFM(song) {
+    console.log(process.env.LASTFM_APIKEY);
+    HTTP.get('https://ws.audioscrobbler.com/2.0/', {
+      params: { method: 'track.search', track: song.data.name + ' ' + song.data.artists[0].name, api_key: process.env.LASTFM_APIKEY, format: 'json' } }, (error, result) => {
+        if (!error) {
+          console.log(result);
+          Songs.update(song._id, { lastFm: result.data.results.trackmatches.track[0] });
+        }
+      });
   },
 });
