@@ -38,7 +38,7 @@ export default class Song extends Component {
   }
 
   componentDidMount() {
-    HTTP.get('http://ws.audioscrobbler.com/2.0/', {
+    HTTP.get('https://ws.audioscrobbler.com/2.0/', {
       params: { method: 'track.search', track: this.props.song.data.name + ' ' + this.props.song.data.artists[0].name, api_key: process.env.LASTFM_APIKEY, format: 'json' } }, (error, result) => {
         if (!error) {
           console.log(result);
