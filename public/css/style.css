@@ -4517,4 +4517,20 @@ text-decoration:none;
     top: -13px;
 	}
 }
+
+li {
+  list-style: none;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.albumart {
+  display: block;
+  margin: 0 auto;
+}
 /***responsive***/
