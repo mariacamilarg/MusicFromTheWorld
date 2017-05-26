@@ -18,7 +18,7 @@ export class MyLists extends Component {
 
   renderSongs() {
     //let filteredSongs = this.props.songs.filter(song => song.creator !== this.props.currentUser);
-    return songs.map( (song) => {
+    return this.props.songs.map( (song) => {
       if (song.submittedby == this.props.currentUser){
         const currentUserId = this.props.currentUser && this.props.currentUser._id;
         const sameUser = song.submittedBy === currentUserId;
