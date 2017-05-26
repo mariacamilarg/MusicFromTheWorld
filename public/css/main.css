@@ -8,6 +8,10 @@
   display: block;
 }
 
+body {
+  margin-bottom: 47px;
+}
+
 div {
   vertical-align: middle;
 }
