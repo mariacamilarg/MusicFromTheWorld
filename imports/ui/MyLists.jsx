@@ -17,18 +17,20 @@ export class MyLists extends Component {
   }
 
   renderSongs() {
-    let filteredSongs = this.props.songs.filter(song => song.creator !== this.props.currentUser);
-    return filteredSongs.map( (song) => {
-      const currentUserId = this.props.currentUser && this.props.currentUser._id;
-      const sameUser = song.submittedBy === currentUserId;
-      return (
-        <Song
-          key= {song._id}
-          song={song}
-          sameUser={sameUser}
-          currentUser={this.props.currentUser}
-        />
-      );
+    //let filteredSongs = this.props.songs.filter(song => song.creator !== this.props.currentUser);
+    return songs.map( (song) => {
+      if (song.creator == this.props.currentUser){
+        const currentUserId = this.props.currentUser && this.props.currentUser._id;
+        const sameUser = song.submittedBy === currentUserId;
+        return (
+          <Song
+            key= {song._id}
+            song={song}
+            sameUser={sameUser}
+            currentUser={this.props.currentUser}
+          />
+        );
+      }
     });
   }
 
