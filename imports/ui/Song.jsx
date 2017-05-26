@@ -45,17 +45,18 @@ export default class Song extends Component {
     return (
       <li className="col-lg-4 col-md-6 col-sm-12">
         <div>
-          <img className={this.isPlaying()} src={this.props.song.data.album.images[1].url} alt={this.props.song.data.album.name} onClick={this.playAudio.bind(this)} />
+          <img className={this.isPlaying() + " " + "albumart"} src={this.props.song.data.album.images[1].url} alt={this.props.song.data.album.name} onClick={this.playAudio.bind(this)} />
           <audio src={this.props.song.data.preview_url} controls hidden onEnded={() => this.playAudio()} ref={(audio) => { this.audio = audio; }} />
-          <div className="songInfo">
+          <div className="songInfo center">
             <h3>{this.props.song.data.name + " by " +  this.props.song.data.artists[0].name} </h3>
           </div>
         </div>
-        <span className="text">
+        <span className="text center">
           <strong>Submited by: {this.props.song.username}</strong>; rating: {(this.props.song.ratingSum/this.props.song.ratingCount) || 0.0}
         </span>
+        <br/>
         { this.props.song.lastFm ?
-          <a href={ this.props.song.lastFm.url}>
+          <a className="center" href={ this.props.song.lastFm.url}>
             <img src="img/lastfm_red_small.gif" alt="Last.fm logo" />
           </a> : ''
         }

@@ -22,7 +22,7 @@ export default class SearchResult extends Component {
 
   playAudio(event) {
     event.preventDefault();
-    if(this.state.playing) {
+    if (this.state.playing) {
       this.setState({playing: false});
       this.audio.pause();
     } else {
@@ -32,7 +32,7 @@ export default class SearchResult extends Component {
   }
 
   isPlaying() {
-    if(this.state.playing)
+    if (this.state.playing)
       return "playing";
     return "";
   }
