@@ -84,7 +84,6 @@ export class App extends Component {
     							</div>
     						  <div className="col-md-9">
                     <h2 className="top-title"><b>music from the world</b></h2>
-                    <h4>Get a taste of how other countries' music sound like. Share the most representative songs from your homecountry and raise them to the top.</h4>
     							</div>
 									<div className="col-md-2">
                     <AccountsUIWrapper />
@@ -100,6 +99,10 @@ export class App extends Component {
                 <div className="col-md-1"></div>
                 <div className="col-md-10">
                   <br />
+                  <div className="row page-description">
+                    <h3>Get a taste of how other countries' music sound like. <br/>Share the most representative songs from your homecountry and raise them to the top!</h3>
+                  </div>
+                  
                   <div className="row">
                     <div className="col-md-4">
                       <h3>Top Charts Per Country:</h3>
