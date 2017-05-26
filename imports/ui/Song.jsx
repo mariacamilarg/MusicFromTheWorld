@@ -53,7 +53,10 @@ export default class Song extends Component {
           </div>
         </div>
         <span className="text center">
-          <strong>Submited by: {this.props.song.username}</strong>; rating: {(this.props.song.ratingSum/this.props.song.ratingCount) || 0.0}
+          <strong>Submited by: </strong> &nbsp; {this.props.song.username}
+        </span>
+        <span className="text center">
+          <strong>Rating: </strong>  &nbsp; {(this.props.song.ratingSum/this.props.song.ratingCount) || 0.0}
         </span>
         <br/>
         { this.props.song.lastFm ?
