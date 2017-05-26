@@ -21,6 +21,7 @@ export default class SearchResult extends Component {
   }
 
   playAudio(event) {
+    console.log("audio playing");
     event.preventDefault();
     if(this.state.playing) {
       this.setState({playing: false});
@@ -46,12 +47,16 @@ export default class SearchResult extends Component {
         <br />
         <div className="row">
           <div className="col-md-2 song-play">
-            <img className="song-img-mini" src="/img/play.png" alt="Play Song" onClick={this.playAudio} />
-            <audio src={this.props.song.preview_url} controls hidden onEnded={() => this.playAudio()} ref={(audio) => { this.audio = audio; }}/>
+            <form onSubmit={(event) => this.playAudio(event)} >
+              <input type="image" className="song-img-mini" name="submit" src="/img/play.png" border="0" alt="Play Song" />
+              <audio src={this.props.song.preview_url} controls hidden onEnded={() => this.playAudio()} ref={(audio) => { this.audio = audio; }}/>
+            </form>
           </div>
           <div className="col-md-2 song-pause">
-            <img className="song-img-mini" src="/img/pause.png" alt="Pause Song" onClick={(event) => this.playAudio(event)} />
-            <audio src={this.props.song.preview_url} controls hidden onEnded={(event) => this.playAudio(event)} ref={(audio) => { this.audio = audio; }}/>
+            <form onSubmit={(event) => this.playAudio(event)} >
+              <input type="image" className="song-img-mini" name="submit" src="/img/pause.png" border="0" alt="Pause Song" />
+              <audio src={this.props.song.preview_url} controls hidden onEnded={() => this.playAudio()} ref={(audio) => { this.audio = audio; }}/>
+            </form>
           </div>
           <div className="col-md-8 song-info">
             <p> <b> {this.props.song.name} </b> </p>
