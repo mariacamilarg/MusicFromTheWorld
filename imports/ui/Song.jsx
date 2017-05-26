@@ -39,11 +39,7 @@ export default class Song extends Component {
   }
 
   handleChange(event) {
-    console.log("hola");
-    console.log(this.props.song);
     Meteor.call('songRate', this.props.song._id, Number(event.target.value));
-    console.log(this.state);
-    console.log(this.props.song);
   }
 
   render() {
@@ -80,7 +76,7 @@ export default class Song extends Component {
           </div>
           <div className="col-md-4">
             { this.props.currentUser && !this.props.sameUser ?
-              <select className="song-country" onChange={(event) => this.handleChange(event)} >
+              <select disabled={this.props.sameUser || this.props.song.ratedBy.indexOf(this.props.currentUser._id) !== -1 } className="song-country" onChange={(event) => this.handleChange(event)} >
                 <option value default>--</option>
                 <option value="0">0</option>
                 <option value="1">1</option>
