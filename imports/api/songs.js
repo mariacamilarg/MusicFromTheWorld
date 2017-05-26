@@ -44,7 +44,7 @@ Meteor.methods({
       params: { method: 'track.search', track: song.data.name + ' ' + song.data.artists[0].name, api_key: process.env.LASTFM_APIKEY, format: 'json' } }, (error, result) => {
         if (!error) {
           console.log(result);
-          Songs.update(song._id, { lastFm: result.data.results.trackmatches.track[0] });
+          Songs.update(song._id, { $set: { lastFm: result.data.results.trackmatches.track[0] } });
         }
       });
   },
