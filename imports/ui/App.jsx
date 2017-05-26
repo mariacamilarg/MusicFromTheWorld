@@ -14,16 +14,28 @@ export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      country: 'COL',
+      country: '',
     };
   }
 
   renderSongs() {
-    //TODO Organizarlos por país. Cambiar a thumbs up/down?
+    //TODO Cambiar a thumbs up/down?
     //let filteredSongs = this.props.songs.filter(song => song.creator !== this.props.currentUser);
     var i;
     return this.props.songs.map( (song) => {
-      if (song.country == this.state.country){
+      if ('' == this.state.country){
+        const currentUserId = this.props.currentUser && this.props.currentUser._id;
+        const sameUser = song.submittedBy === currentUserId;
+        return (
+          <Song
+            key= {song._id}
+            song={song}
+            sameUser={sameUser}
+            currentUser={this.props.currentUser}
+          />
+        );
+      }
+      else if (song.country == this.state.country){
         const currentUserId = this.props.currentUser && this.props.currentUser._id;
         const sameUser = song.submittedBy === currentUserId;
         return (

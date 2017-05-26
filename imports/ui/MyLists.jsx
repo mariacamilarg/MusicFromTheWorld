@@ -12,11 +12,13 @@ import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 import Song from "./Song.jsx";
 
 export class MyLists extends Component {
+  constructor(props) {
+    super(props);
+  }
 
   renderSongs() {
-    //TODO Organizarlos por país. Cambiar a thumbs up/down?
-    //let filteredSongs = this.props.songs.filter(song => song.creator !== this.props.currentUser);
-    return this.props.songs.map( (song) => {
+    let filteredSongs = this.props.songs.filter(song => song.creator !== this.props.currentUser);
+    return filteredSongs.map( (song) => {
       const currentUserId = this.props.currentUser && this.props.currentUser._id;
       const sameUser = song.submittedBy === currentUserId;
       return (
@@ -76,11 +78,11 @@ export class MyLists extends Component {
                 <div className="col-md-10">
                   <br />
                   <div className="row">
-                    <div className="col-md-4">
-                      <h2>Top Charts Per Country:</h2>
+                    <div className="col-md-6">
+                      <h2>The songs you have added:</h2>
                     </div>
-                    <div className="col-md-8">
-                      dropdown of countries
+                    <div className="col-md-6">
+
                     </div>
                   </div>
                   <br />

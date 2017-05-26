@@ -56,18 +56,17 @@ class Contact extends Component {
               <div className="col-md-5">
                 <h3>Find Us </h3>
                 <br />
-                <iframe className="map-frame" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Purwokerto,+Central+Java,+Indonesia&amp;aq=0&amp;oq=purwo&amp;sll=37.0625,-95.677068&amp;sspn=50.291089,104.238281&amp;ie=UTF8&amp;hq=&amp;hnear=Purwokerto,+Banyumas,+Central+Java,+Indonesia&amp;ll=-7.431391,109.24783&amp;spn=0.031022,0.050898&amp;t=m&amp;z=14&amp;output=embed"></iframe>
+                <iframe className="map-frame" src="https://maps.google.com/maps?q=4.6027795,-74.067091&hl=es;z=14&amp;output=embed"></iframe>
               </div>
               <div className="col-md-1"></div>
               <div className="col-md-4">
-                <h3 className="tittle">Social Websites</h3>
+                <h3>Social Websites</h3>
                 <br />
                 <p>
-                  Nullam ac urna velit. Pellentesque in arcu tortor.
-                  Pellentesque nec est et elit varius pulvinar eget vitae sapien.
-                  Aenean vehicula accumsan gravida. Cum sociis natoque penatibus
-                  et magnis dis parturient montes, nascetur ridiculus mus. Phasellus
-                  et lectus in urna consequat consectetur ut eget risus.
+                  <a href="https://webdevuniandes.github.io/camendoza94/camendoza94/homepage/public_html/index.html">Camilo Alejandro Mendoza Arrieta</a>
+                </p>
+                <p>
+                  <a href="https://mariacamilaremolinagutierrez.github.io/">Maria Camila Remolina Gutierrez</a>
                 </p>
               </div>
               <div className="col-md-1"></div>
