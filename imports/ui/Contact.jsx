@@ -63,7 +63,7 @@ class Contact extends Component {
                 <h3>Social Websites</h3>
                 <br />
                 <p>
-                  <a href="https://webdevuniandes.github.io/camendoza94/camendoza94/homepage/public_html/index.html">Camilo Alejandro Mendoza Arrieta</a>
+                  <a href="https://webdevuniandes.github.io/camendoza94/camendoza94/homepage/public_html/index.html">Camilo Andres Mendoza Arrieta</a>
                 </p>
                 <p>
                   <a href="https://mariacamilaremolinagutierrez.github.io/">Maria Camila Remolina Gutierrez</a>

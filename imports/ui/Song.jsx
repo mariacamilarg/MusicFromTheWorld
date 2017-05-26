@@ -12,32 +12,30 @@ export default class Song extends Component {
     };
   }
 
-  handleChange(event) {
-    this.setState({userRating: event.target.value});
-  }
-
   handleSubmit(event) {
     event.preventDefault();
     Meteor.call('songRate', this.props.song._id, Number(this.state.userRating));
   }
 
   playAudio() {
-    if(this.state.playing) {
-      this.setState({playing: false});
+    if (this.state.playing) {
+      this.setState({ playing: false });
       this.audio.pause();
     } else {
-      this.setState({playing: true});
+      this.setState({ playing: true });
       this.audio.play();
     }
   }
 
   isPlaying() {
-    if(this.state.playing)
-      return "playing";
-    return "";
+    if (this.state.playing) {
+      return 'playing';
+    }
+    return '';
   }
 
   componentDidMount() {
+    console.log(process.env.LASTFM_APIKEY);
     HTTP.get('https://ws.audioscrobbler.com/2.0/', {
       params: { method: 'track.search', track: this.props.song.data.name + ' ' + this.props.song.data.artists[0].name, api_key: process.env.LASTFM_APIKEY, format: 'json' } }, (error, result) => {
         if (!error) {
@@ -47,12 +45,16 @@ export default class Song extends Component {
       });
   }
 
+  handleChange(event) {
+    this.setState({ userRating: event.target.value });
+  }
+
   render() {
     return (
       <li className="col-lg-4 col-md-6 col-sm-12">
         <div>
-          <img className={this.isPlaying()} src={this.props.song.data.album.images[1].url} alt={this.props.song.data.album.name} onClick={() => this.playAudio()} />
-          <audio src={this.props.song.data.preview_url} controls hidden onEnded={() => this.playAudio()} ref={(audio) => { this.audio = audio; }}/>
+          <img className={this.isPlaying()} src={this.props.song.data.album.images[1].url} alt={this.props.song.data.album.name} onClick={this.playAudio.bind(this)} />
+          <audio src={this.props.song.data.preview_url} controls hidden onEnded={() => this.playAudio()} ref={(audio) => { this.audio = audio; }} />
           <div className="songInfo">
             <h3>{this.props.song.data.name + " by " +  this.props.song.data.artists[0].name} </h3>
           </div>
@@ -81,9 +83,9 @@ export default class Song extends Component {
     );
   }
 }
- 
+
 Song.propTypes = {
   song: PropTypes.object.isRequired,
   sameUser: PropTypes.bool.isRequired,
-  currentUser: PropTypes.object
+  currentUser: PropTypes.object,
 };
