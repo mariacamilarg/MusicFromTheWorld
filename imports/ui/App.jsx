@@ -6,7 +6,7 @@ import { Meteor } from "meteor/meteor";
 import {createContainer} from "meteor/react-meteor-data";
 import { HTTP } from 'meteor/http';
 
-import { Songs } from '../api/songs.js';
+import Songs from '../api/songs.js';
 
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 import Song from "./Song.jsx";

@@ -23,3 +23,6 @@ accounts-ui
 accounts-password
 http
 twbs:bootstrap
+practicalmeteor:mocha
+xolvio:cleaner
+dburles:factory
