@@ -21,7 +21,6 @@ export default class SearchResult extends Component {
   }
 
   playAudio(event) {
-    console.log("audio playing");
     event.preventDefault();
     if (this.state.playing) {
       this.setState({playing: false});
