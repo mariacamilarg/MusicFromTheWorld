@@ -48,13 +48,13 @@ export default class SearchResult extends Component {
         <div className="row">
           <div className="col-md-2 song-play">
             <form onSubmit={(event) => this.playAudio(event)} >
-              <input type="image" className="song-img-mini" name="submit" src="/img/play.png" border="0" alt="Play Song" />
+              <input type="image" className="song-img-mini" name="submit" src="/img/play.png" alt="Play Song" />
               <audio src={this.props.song.preview_url} controls hidden onEnded={() => this.playAudio()} ref={(audio) => { this.audio = audio; }}/>
             </form>
           </div>
           <div className="col-md-2 song-pause">
             <form onSubmit={(event) => this.playAudio(event)} >
-              <input type="image" className="song-img-mini" name="submit" src="/img/pause.png" border="0" alt="Pause Song" />
+              <input type="image" className="song-img-mini" name="submit" src="/img/pause.png" alt="Pause Song" />
               <audio src={this.props.song.preview_url} controls hidden onEnded={() => this.playAudio()} ref={(audio) => { this.audio = audio; }}/>
             </form>
           </div>
